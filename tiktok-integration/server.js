@@ -24,7 +24,7 @@ broadcast({type:"tiktok-event",kind:"gift",user:data.uniqueId,gift,count,coins,n
 conn.on(WebcastEvent.DISCONNECTED,()=>{if(mine!==generation)return;ttState="disconnected";sync();notice("TikTok desconectado. Use Conectar TikTok para tentar novamente.")});
 conn.on(WebcastEvent.ERROR,e=>{if(mine!==generation)return;ttState="error";sync();notice("Erro TikTok: "+String(e?.message||e))});
 try{await conn.connect();if(mine!==generation){await conn.disconnect();return}ttState="connected";sync();notice("TikTok LIVE conectado: @"+user)}catch(e){if(mine!==generation)return;ttState="error";sync();notice("Falha ao conectar TikTok: "+String(e?.message||e))}}
-wss.on("connection",(ws,req)=>{const origin=req.headers.origin||"";if(origin&&!origin.startsWith("file://")&&!/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)){ws.close(1008,"Origem nao permitida");return}
+wss.on("connection",(ws,req)=>{const origin=req.headers.origin||"";if(origin&&origin!=="null"&&!origin.startsWith("file://")&&!/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)){ws.close(1008,"Origem nao permitida");return}
 let role="panel";panels.add(ws);send(ws,status());ws.on("message",async raw=>{let msg;try{msg=JSON.parse(String(raw))}catch{return}
 if(msg.action==="unity-register"){panels.delete(ws);role="unity";unity.add(ws);sync();notice("Jogo Unity conectado.");return}
 if(role!=="panel")return;
