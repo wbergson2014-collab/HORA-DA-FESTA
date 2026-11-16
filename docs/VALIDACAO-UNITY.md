@@ -14,4 +14,4 @@ As primeiras execuções não encontravam as variáveis padrão do Windows e o P
 Use um checkout curto no Windows (por exemplo C:\HDF), não reutilize Library importada em um caminho longo e siga UNITY-SINCRONIZACAO.md. A cena e os assets URP gerados estão incluídos; Library e caches não estão no Git.
 
 ## Limites da validação
-A apresentação visual não passou por revisão manual e a LIVE real não foi testada. O protótipo usa geometria/animação procedural e não inclui áudio nem modelos artísticos finais. Mantenha uma aba do painel aberta para aplicar as regras e sortear papéis uma única vez.
+O executável Windows foi gerado e abriu pelo iniciador. Uma revisão visual básica conferiu bandeirinhas coloridas, banda, noivos e 26 participantes de teste recebidos por WebSocket. O iniciador passou em verificação de arquivos, início, segunda abertura sem duplicação e encerramento; o coletor 8781 permaneceu em execução. A LIVE real não foi testada. O protótipo usa geometria/animação procedural e não inclui áudio nem modelos artísticos finais. Mantenha uma aba do painel aberta para aplicar as regras e sortear papéis uma única vez.

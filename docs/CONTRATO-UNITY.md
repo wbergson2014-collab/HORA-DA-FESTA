@@ -30,3 +30,6 @@ HTTP /roblox/events?session=...&after=... com live, username, session, cursor, e
 - Painel recarrega: restaura localStorage e republica.
 - Reset no painel: envia people/band vazios, remove os atores reais e restaura figurantes.
 - Falta do coletor: status error/notice; a simulação local continua disponível.
+
+## Identificacao para o iniciador
+As mensagens status incluem bridge: "hora-da-festa" e protocolVersion: 1. O iniciador valida esses campos antes de reutilizar uma ponte na porta 8765 e nao encerra processos desconhecidos.

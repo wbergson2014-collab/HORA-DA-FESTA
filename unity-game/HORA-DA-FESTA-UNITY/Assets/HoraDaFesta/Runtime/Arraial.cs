@@ -88,6 +88,9 @@ namespace HoraDaFesta
                     {
                         Vector3.zero,
                         new Vector3(.8f, 0, 0),
+                        new Vector3(.4f, -.9f, 0),
+                        Vector3.zero,
+                        new Vector3(.8f, 0, 0),
                         new Vector3(.4f, -.9f, 0)
                     };
                     mesh.triangles = new[]
@@ -95,9 +98,9 @@ namespace HoraDaFesta
                         0,
                         1,
                         2,
-                        2,
-                        1,
-                        0
+                        5,
+                        4,
+                        3
                     };
                     mesh.RecalculateNormals();
                     flag.AddComponent<MeshFilter>().sharedMesh = mesh;
@@ -119,6 +122,7 @@ namespace HoraDaFesta
             sun.type = LightType.Directional;
             sun.intensity = 1.2f;
             sun.transform.rotation = Quaternion.Euler(45, -35, 0);
+            RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
             RenderSettings.ambientLight = new Color(.4f, .4f, .55f);
             for (int i = 0; i < 6; i++)
             {

@@ -2,6 +2,7 @@
 
 Arraiá 3D procedural em Unity 6 URP com painel local e ponte TikTok LIVE existente.
 
+- [Iniciar com um clique, sem abrir Unity](docs/INICIAR-COM-UM-CLIQUE.md)
 - [Como abrir, testar e sincronizar o Unity](docs/UNITY-SINCRONIZACAO.md)
 - [Contrato painel/ponte/Unity](docs/CONTRATO-UNITY.md)
 - [Regras do jogo](docs/REGRAS-DO-JOGO.md)

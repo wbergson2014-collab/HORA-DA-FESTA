@@ -5,7 +5,7 @@ const wss=new WebSocketServer({host:"127.0.0.1",port:PORT,maxPayload:1024*1024})
 const panels=new Set(),unity=new Set();
 let lastState=null,revision=0;
 let tiktok=null,username="",ttState="disconnected",generation=0;
-function status(){return {type:"status",tiktok:ttState,unity:unity.size?"connected":"disconnected",username}}
+function status(){return {type:"status",bridge:"hora-da-festa",protocolVersion:1,tiktok:ttState,unity:unity.size?"connected":"disconnected",username}}
 function send(ws,obj){if(ws.readyState===WebSocket.OPEN)ws.send(JSON.stringify(obj))}
 function broadcast(obj){for(const ws of panels)send(ws,obj);if(obj.type==="tiktok-event")for(const ws of unity)send(ws,obj)}
 function sync(){broadcast(status())}
