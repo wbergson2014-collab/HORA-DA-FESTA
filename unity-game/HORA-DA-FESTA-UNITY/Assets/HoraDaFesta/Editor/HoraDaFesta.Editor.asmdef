@@ -1,0 +1,11 @@
+{
+  "name": "HoraDaFesta.Editor",
+  "references": [
+    "HoraDaFesta.Runtime",
+    "Unity.RenderPipelines.Universal.Runtime",
+    "Unity.RenderPipelines.Core.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "HoraDaFesta.PlayTests",
+  "references": [
+    "HoraDaFesta.Runtime"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

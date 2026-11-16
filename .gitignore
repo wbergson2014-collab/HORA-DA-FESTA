@@ -15,3 +15,7 @@ dist/
 # OS
 .DS_Store
 Thumbs.db
+
+# Unity generated locally by menu/batch
+unity-game/HORA-DA-FESTA-UNITY/Assets/HoraDaFesta/Generated/
+unity-game/HORA-DA-FESTA-UNITY/Assets/HoraDaFesta/Generated.meta

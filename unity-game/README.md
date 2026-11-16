@@ -1,3 +1,7 @@
-# Jogo Unity 3D
+# HORA DA FESTA — Unity 6 URP
 
-Projeto de festa junina 3D com insetos estilizados, banda de seis músicos, noivos, convidados, animações, câmera cinematográfica e efeitos especiais. Projeto Unity ainda não importado para este repositório.
+Abra HORA-DA-FESTA-UNITY no Unity 6000.6.9f1. Execute HORA DA FESTA > Gerar cena Arraial e pressione Play.
+
+- [Instalação, testes e sincronização segura](../docs/UNITY-SINCRONIZACAO.md)
+- [Contrato de estado/eventos](../docs/CONTRATO-UNITY.md)
+- [Regras](../docs/REGRAS-DO-JOGO.md)

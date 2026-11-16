@@ -1,0 +1,13 @@
+{
+  "name": "HoraDaFesta.Tests",
+  "references": [
+    "HoraDaFesta.Runtime",
+    "HoraDaFesta.Editor"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}
