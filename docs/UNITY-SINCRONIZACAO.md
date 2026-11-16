@@ -6,7 +6,7 @@ Implementação procedural com primitivas 3D, seis instrumentos visuais, dança 
 O projeto local foi apenas inspecionado nesta sessão: Unity 6000.6.9f1, URP 17.6.0. Não foi sincronizado nem sobrescrito. O trabalho e os testes usam a cópia do repositório.
 
 ## Testar a cópia independente (recomendado)
-1. Faça checkout da branch com estas alterações em uma pasta separada. Instale Node.js 24 LTS e Unity 6000.6.9f1 com suporte Windows.
+1. Faça checkout da branch codex/unity-arraial-sync em uma pasta separada e curta, por exemplo C:\HDF. Instale Node.js 24 LTS e Unity 6000.6.9f1 com suporte Windows.
 2. Em PowerShell, na raiz do repositório:
 
 ```powershell
@@ -18,7 +18,7 @@ npm start
 
 3. Abra painel-admin/index.html no navegador. Mantenha somente uma aba de painel aberta: ela é a autoridade das regras e conserva seu estado no localStorage. Não é necessário conectar uma LIVE para simular.
 4. No Unity Hub, Add > Add project from disk, selecione unity-game/HORA-DA-FESTA-UNITY. Aguarde importação/compilação.
-5. Execute o menu **HORA DA FESTA > Gerar cena Arraial**. O menu pede que salve qualquer cena aberta, cria uma cena separada em Assets/HoraDaFesta/Generated/Arraial.unity, configura URP e define essa cena para build. Na cópia independente isso é esperado; em um projeto pessoal use backup antes de executar o menu.
+5. Abra Assets/HoraDaFesta/Generated/Arraial.unity, já incluída. Para regenerá-la, execute o menu **HORA DA FESTA > Gerar cena Arraial**. O menu pede que salve qualquer cena aberta, cria uma cena separada em Assets/HoraDaFesta/Generated/Arraial.unity, configura URP e define essa cena para build. Na cópia independente isso é esperado; em um projeto pessoal use backup antes de executar o menu.
 6. Pressione Play. O cenário é montado ao iniciar; o indicador Unity do painel deve ficar conectado. O cliente registra unity-register e reconecta a cada dois segundos.
 7. Simule !entrar, 15 rosas, sete corações com dedos, café, perfume e rosquinha. Confira nomes, substituição FIFO da banda, noivos sem duplicação, fogos e dança acelerada. Perfume deve gerar fogos mesmo com valor alto, sem promover a noivo. Modo 2 deve bloquear !entrar. Durações de efeitos vêm dos campos do painel.
 8. Teste câmeras Noivos, Banda, Visão geral e Automática. Fogos têm prioridade de visão ampla; presentes reais focam o espectador por quatro segundos em modo automático. Após o prazo, a câmera retorna ao percurso automático.
@@ -46,7 +46,10 @@ Para atualizar uma instalação já existente, compare e mescle Assets/HoraDaFes
 Na cópia independente, Window > General > Test Runner > EditMode > Run All e depois PlayMode > Run All. Os testes verificam desserialização, geração da cena com URP, reutilização de atores, vagas de instrumentos e reset. Para executar por linha de comando:
 
 ```powershell
-& 'C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Unity.exe' -batchmode -nographics -projectPath "$PWD\unity-game\HORA-DA-FESTA-UNITY" -runTests -testPlatform EditMode -testResults "$PWD\unity-results.xml" -logFile "$PWD\unity-tests.log"
+& 'C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Unity.exe' -batchmode -force-d3d11 -projectPath "$PWD\unity-game\HORA-DA-FESTA-UNITY" -runTests -testPlatform EditMode -testResults "$PWD\unity-results.xml" -logFile "$PWD\unity-tests.log"
 ```
 
 Não acrescente -quit a -runTests. Esses testes não substituem conferir a apresentação em Play e testar uma LIVE real. O alvo é Windows Editor/Standalone; ClientWebSocket não atende WebGL.
+
+## Caminhos no Windows
+Nesta sessão, a pasta longa do workspace gerou caminhos de pacote com 279 caracteres e erros Host type is not matching any asset type em recursos URP. Uma importação nova usando um alias curto da mesma cópia permitiu aprovar os testes EditMode. Use um checkout curto como C:\HDF e evite reaproveitar Library criada num caminho longo. O projeto pessoal em D: já usa um caminho mais curto. Não mova nem substitua a Library de um projeto aberto.

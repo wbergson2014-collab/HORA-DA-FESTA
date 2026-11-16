@@ -30,6 +30,7 @@ namespace HoraDaFesta
         public static Color Gold = new Color(1, .65f, .13f);
         void Start()
         {
+            Application.runInBackground = true;
             Build();
             if (connectBridge)
                 socket = gameObject.AddComponent<FestaSocket>();
