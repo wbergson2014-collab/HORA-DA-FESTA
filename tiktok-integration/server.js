@@ -1,16 +1,17 @@
 import { WebSocketServer, WebSocket } from "ws";
-import { TikTokLiveConnection, WebcastEvent } from "tiktok-live-connector";
-const PORT=8765;
-const wss=new WebSocketServer({host:"127.0.0.1",port:PORT});
+
+const PORT=Number(process.env.PORT||8765);
+const wss=new WebSocketServer({host:"127.0.0.1",port:PORT,maxPayload:1024*1024});
 const panels=new Set(),unity=new Set();
+let lastState=null,revision=0;
 let tiktok=null,username="",ttState="disconnected",generation=0;
-function status(){return {type:"status",tiktok:ttState,unity:unity.size?"connected":"disconnected",username}}
+function status(){return {type:"status",bridge:"hora-da-festa",protocolVersion:1,tiktok:ttState,unity:unity.size?"connected":"disconnected",username}}
 function send(ws,obj){if(ws.readyState===WebSocket.OPEN)ws.send(JSON.stringify(obj))}
-function broadcast(obj){for(const ws of panels)send(ws,obj)}
+function broadcast(obj){for(const ws of panels)send(ws,obj);if(obj.type==="tiktok-event")for(const ws of unity)send(ws,obj)}
 function sync(){broadcast(status())}
 function notice(message){broadcast({type:"notice",message});console.log(message)}
 // Reuse the already-connected local TikTok collector on port 8781.
-const SOURCE="http://127.0.0.1:8781";
+const SOURCE=process.env.SOURCE_URL||"http://127.0.0.1:8781";
 let pollTimer=null,sourceSession=null,sourceCursor=null,pollBusy=false;
 function stopSource(){if(pollTimer)clearInterval(pollTimer);pollTimer=null;sourceSession=null;sourceCursor=null}
 function classifyGift(name){const n=String(name||"").toLowerCase();return n.includes("rosa")||n==="rose"?"rose":n==="gg"?"gg":n.includes("coração com dedos")||n.includes("coracao com dedos")||n.includes("finger heart")?"heart":n.includes("hora do café")||n.includes("hora do cafe")||n.includes("coffee time")?"coffee":n.includes("perfume")?"perfume":n.includes("rosquinha")||n.includes("doughnut")||n.includes("donut")?"donut":"generic"}
@@ -49,11 +50,14 @@ async function disconnectTikTok(){generation++;stopSource();username="";ttState=
 async function connectTikTok(user){await disconnectTikTok();username=user;const mine=++generation;ttState="connecting";sync();notice("Usando a conexao existente da porta 8781 para @"+user);await pollSource(mine);if(mine===generation)pollTimer=setInterval(()=>pollSource(mine),700)}
 wss.on("connection",(ws,req)=>{const origin=req.headers.origin||"";if(origin&&origin!=="null"&&!origin.startsWith("file://")&&!/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)){ws.close(1008,"Origem nao permitida");return}
 let role="panel";panels.add(ws);send(ws,status());ws.on("message",async raw=>{let msg;try{msg=JSON.parse(String(raw))}catch{return}
-if(msg.action==="unity-register"){panels.delete(ws);role="unity";unity.add(ws);sync();notice("Jogo Unity conectado.");return}
+if(msg.action==="unity-register"){panels.delete(ws);role="unity";unity.add(ws);if(lastState)send(ws,lastState);sync();notice("Jogo Unity conectado.");return}
 if(role!=="panel")return;
 if(msg.action==="status")send(ws,status());
+if(msg.action==="panel-state" && validState(msg.state)){lastState={type:"game-state",revision:++revision,state:msg.state};for(const client of unity)send(client,lastState)}
 if(msg.action==="tiktok-connect"&&/^[a-zA-Z0-9._]{2,30}$/.test(String(msg.username||"")))await connectTikTok(msg.username);
 if(msg.action==="tiktok-disconnect")await disconnectTikTok();
 if(msg.action==="game-command")for(const client of unity)send(client,{type:"game-command",command:msg.command,payload:msg.payload||{}});
 });ws.on("close",()=>{panels.delete(ws);if(unity.delete(ws)){sync();notice("Jogo Unity desconectado.")}})});
-console.log("HORA DA FESTA bridge: ws://127.0.0.1:"+PORT);
+wss.on("listening",()=>console.log("HORA DA FESTA bridge: ws://127.0.0.1:"+PORT));
+
+function validState(s){return s && [1,2].includes(s.mode) && Array.isArray(s.people) && s.people.length<=2000 && s.people.every(p=>p && typeof p.name==="string" && p.name.length<=100 && ["quadrilha","banda","noivo","noiva"].includes(p.role)) && Array.isArray(s.band) && s.band.length<=6 && s.couple && ["automatic","wide","couple","band"].includes(s.camera)}

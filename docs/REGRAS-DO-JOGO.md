@@ -22,4 +22,4 @@ Seis vagas: sanfona, zabumba, triângulo, saxofone, teclado e violão. Ao entrar
 Noivo e noiva são papéis atribuídos aleatoriamente, sem inferir gênero. Quando substituídos, os anteriores voltam à quadrilha. Câmera automática com prioridade de eventos, foco em presentes e enquadramento amplo durante fogos. Durações configuráveis no painel.
 
 ## Estado atual
-Integração TikTok LIVE pendente. As regras devem ser testáveis localmente por simulador antes da conexão real.
+Ponte local implementada em 8765, reaproveitando o coletor LIVE existente em 8781. O painel aplica estas regras e publica o estado ao Unity. A validação com uma LIVE real permanece pendente; o simulador e os testes locais não precisam conectar ao TikTok.
